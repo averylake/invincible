@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Invincible Summer | Avery Lake</title>
+    <meta name="description"
+        content="We do not break the winter. We simply make it impossible for it to last. An immersive digital triptych by Avery Lake.">
+    <meta name="author" content="Avery Lake">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="keywords" content="Avery Lake, Digital Art, Camus, Invincible Summer, Net Art, Triptych, Resistance">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://invincible.averylakeofficial.com/">
+    <meta property="og:title" content="The Invincible Summer | Avery Lake">
+    <meta property="og:description"
+        content="We do not break the winter. We simply make it impossible for it to last. An immersive digital triptych.">
+    <!-- Updated for SEO/Sharing - Optimized for social media (1200x630px) -->
+    <meta property="og:image" content="https://invincible.averylakeofficial.com/social-share.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://invincible.averylakeofficial.com/">
+    <meta property="twitter:title" content="The Invincible Summer | Avery Lake">
+    <meta property="twitter:description"
+        content="We do not break the winter. We simply make it impossible for it to last. An immersive digital triptych.">
+    <meta property="twitter:image" content="https://invincible.averylakeofficial.com/social-share.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --color-bg: #0c0d0e;
+            --color-ice: #c4d4dc;
+            --color-text: #f0f5f7;
+            --color-text-muted: #8a9ba3;
+            --color-accent: #7eb8cc;
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: auto;
+            /* Improve scroll performance on mobile */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body {
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-serif);
+            overflow-x: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ========== SCROLL CONTAINER ========== */
+        .scroll-container {
+            height: 600vh;
+            /* Long scroll for smooth timing */
+            position: relative;
+            z-index: 2;
+            /* Enable smooth touch scrolling */
+            touch-action: pan-y;
+        }
+
+        /* ========== UI CONTROLS ========== */
+        .sound-control {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            z-index: 100;
+            cursor: pointer;
+            opacity: 0.8;
+            /* Higher initial opacity */
+            transition: all 0.3s ease;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: #fff;
+
+            /* Added visibility styling */
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.8rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        .sound-control:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        .sound-icon {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 12px;
+        }
+
+        .bar {
+            width: 2px;
+            background: #fff;
+            height: 3px;
+            transition: height 0.2s;
+        }
+
+        /* Animated bars when active */
+        .sound-control.active .bar:nth-child(1) {
+            animation: equalizer 0.8s infinite;
+        }
+
+        .sound-control.active .bar:nth-child(2) {
+            animation: equalizer 0.8s 0.2s infinite;
+        }
+
+        .sound-control.active .bar:nth-child(3) {
+            animation: equalizer 0.8s 0.4s infinite;
+        }
+
+        @keyframes equalizer {
+
+            0%,
+            100% {
+                height: 3px;
+            }
+
+            50% {
+                height: 12px;
+            }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 3rem;
+            /* Moved up slightly */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            opacity: 0.8;
+            z-index: 100;
+            transition: opacity 0.5s;
+            animation: fadeIn 2s ease;
+        }
+
+        .scroll-indicator.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .mouse-icon {
+            width: 24px;
+            /* Larger */
+            height: 38px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .mouse-icon::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 6px;
+            background: #fff;
+            border-radius: 2px;
+            animation: scroll 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .scroll-text {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes scroll {
+            0% {
+                top: 6px;
+                opacity: 1;
+            }
+
+            100% {
+                top: 20px;
+                opacity: 0;
+            }
+        }
+
+        /* ========== FIXED VIEWPORT ========== */
+        .viewport {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* ========== FULLSCREEN IMAGE LAYERS ========== */
+        .scene-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.1s ease-out;
+            will-change: opacity, transform;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .scene-layer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Scale slightly up to allow for movement without edges showing */
+            transform: scale(1.05);
+        }
+
+        .scene-layer.active {
+            opacity: 1;
+            z-index: 10;
+        }
+
+        /* Smooth zoom effect on active */
+        .scene-layer.active img {
+            animation: breathe 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes breathe {
+            0% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* ========== OVERLAYS ========== */
+        .overlay-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            pointer-events: none;
+            /* Allow scrolling through */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ========== TEXT ELEMENTS ========== */
+        .text-layer {
+            position: absolute;
+            width: 100%;
+            padding: 0 2rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .text-layer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-top {
+            top: 12%;
+        }
+
+        .text-bottom {
+            bottom: 10%;
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .title span {
+            font-style: italic;
+            color: var(--color-accent);
+        }
+
+        .subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-text {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .phase-text em {
+            color: #fff;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .phase-text strong {
+            color: var(--color-accent);
+            font-weight: 500;
+        }
+
+        /* ========== SPECIMEN LABELS ========== */
+        .specimen-label {
+            position: absolute;
+            background: rgba(10, 10, 10, 0.6);
+            border-left: 1px solid var(--color-accent);
+            padding: 0.8rem 1.2rem;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .specimen-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .specimen-label.left {
+            left: 10%;
+            top: 40%;
+            transform: translateX(-20px);
+        }
+
+        .specimen-label.left.visible {
+            transform: translateX(0);
+        }
+
+        .specimen-label.right {
+            right: 10%;
+            top: 50%;
+            transform: translateX(20px);
+        }
+
+        .specimen-label.right.visible {
+            transform: translateX(0);
+        }
+
+        .label-title {
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-top: 0.2rem;
+        }
+
+        .label-value {
+            color: #fff;
+        }
+
+        /* ========== PHASE 3 ALIGNMENT ========== */
+        /* New image is centered, no offset needed */
+        #layer3 img {
+            object-position: center center;
+        }
+
+        /* ========== TRIPTYCH FINALE ========== */
+        .triptych-section {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            /* Changed from center to allow scroll */
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+            padding: 4rem 2rem;
+            overflow-y: auto;
+            /* Enable scrolling for tall content */
+            min-height: 100vh;
+        }
+
+        .triptych-section.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .triptych-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            /* Increased gap for gallery feel */
+            width: 100%;
+            max-width: 900px;
+            /* Reduced from 1000px to fit screen better */
+            margin: 1rem 0;
+            padding: 0 1rem;
+        }
+
+        .grid-item {
+            aspect-ratio: 2/3;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ========== FRAME STYLES ========== */
+        .framed-piece {
+            background: #fdfdfd;
+            /* White margin */
+            padding: 10px;
+            /* The white margin size */
+            box-shadow:
+                0 0 0 8px #080808,
+                /* The Black Frame */
+                0 0 20px rgba(0, 0, 0, 0.5);
+            /* Drop shadow */
+            transition: transform 0.4s ease;
+        }
+
+        .framed-piece img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Border inside to separate image from white matte slightly? Optional. */
+        }
+
+        .framed-piece:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow:
+                0 0 0 8px #080808,
+                0 15px 40px rgba(0, 0, 0, 0.8);
+            z-index: 10;
+        }
+
+        .product-details {
+            max-width: 600px;
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: var(--font-mono);
+            color: #aaa;
+            font-size: 0.65rem;
+            line-height: 1.6;
+            letter-spacing: 0.05em;
+        }
+
+        .product-details strong {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .product-details h3 {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons {
+            margin-top: 2rem;
+            display: flex;
+            gap: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 1rem 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .footer-credit {
+            margin-top: 6rem;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.2em;
+            color: #444;
+            text-transform: uppercase;
+            padding-bottom: 2rem;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 900px) {
+            .triptych-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                /* More space for frames */
+                max-width: 320px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            /* Move scroll indicator higher to avoid overlap with sound control */
+            .scroll-indicator {
+                bottom: 6rem;
+            }
+
+            /* Move sound control to bottom-right on mobile */
+            .sound-control {
+                left: auto;
+                right: 1rem;
+                bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="scroll-container">
+        <!-- FIXED SCENE -->
+        <div class="viewport">
+
+            <!-- Layer 1: Frozen -->
+            <div class="scene-layer active" id="layer1">
+                <img src="avery-lake-invincible-summer-phase-1-frozen.jpg" alt="Frozen Landscape - Avery Lake">
+                <!-- Overlay Elements -->
+                <div class="overlay-content">
+                    <div class="text-layer text-top visible" id="titleGroup">
+                        <p class="subtitle">A Triptych by Avery Lake</p>
+                        <h1 class="title">The Invincible <span>Summer</span></h1>
+                    </div>
+                </div>
+                <div class="specimen-label left" id="label1">
+                    <div class="label-title">Phase I: Crystalline</div>
+                    <div class="label-row"><span class="label-key">State</span><span class="label-value">Solid
+                            (Ice Ih)</span></div>
+                    <div class="label-row"><span class="label-key">Temp</span><span class="label-value">-12°C</span>
+                    </div>
+                    <!-- METAPHOR CONNECTION -->
+                    <div class="label-row"><span class="label-key">System</span><span class="label-value"
+                            style="color:#ffcccc">Rigid / Oppressive</span></div>
+                </div>
+            </div>
+
+            <!-- Layer 2: Melting -->
+            <div class="scene-layer" id="layer2">
+                <img src="avery-lake-invincible-summer-phase-2-melting.jpg" alt="Melting Transition - Avery Lake">
+                <div class="specimen-label right" id="label2">
+                    <div class="label-title">Phase II: Transition</div>
+                    <div class="label-row"><span class="label-key">State</span><span class="label-value">Solid →
+                            Liquid</span></div>
+                    <div class="label-row"><span class="label-key">ΔH (Fusion)</span><span class="label-value">+6.01
+                            kJ/mol</span></div>
+                    <!-- METAPHOR CONNECTION -->
+                    <div class="label-row"><span class="label-key">System</span><span class="label-value"
+                            style="color:#fffebb">Destabilizing</span></div>
+                </div>
+            </div>
+
+            <!-- Layer 3: Puddle -->
+            <div class="scene-layer" id="layer3">
+                <img src="avery-lake-invincible-summer-phase-3-water.jpg" alt="Released Water - Avery Lake">
+                <div class="specimen-label left" id="label3">
+                    <div class="label-title">Phase III: Released</div>
+                    <div class="label-row"><span class="label-key">State</span><span class="label-value">Liquid</span>
+                    </div>
+                    <div class="label-row"><span class="label-key">ΔS (Entropy)</span><span class="label-value">+22.0
+                            J/mol·K</span></div>
+                    <!-- METAPHOR CONNECTION -->
+                    <div class="label-row"><span class="label-key">System</span><span class="label-value"
+                            style="color:#ccffdd">Unbound / Free</span></div>
+                </div>
+            </div>
+
+            <!-- Narrative Text Overlay (Global) -->
+            <div class="overlay-content">
+                <div class="text-layer text-bottom" id="text1">
+                    <p class="phase-text">
+                        Living in Canada, people often ask how we manage the long, frozen winters.<br>
+                        The secret is: <em>Do not fight the cold.</em><br>
+                        It is tempting to crush the ice, to shatter the oppression of the freeze.<br>
+                        But force does not work; it only creates <strong>dangerous shards</strong>.
+                    </p>
+                </div>
+
+                <div class="text-layer text-bottom" id="text2">
+                    <p class="phase-text">
+                        What works best is <strong>sunlight</strong> and steady warmth.<br>
+                        We do not attack the structure; we change the atmosphere around it.<br>
+                        <em>By raising the heat, we render it impossible for the ice to flourish.</em>
+                    </p>
+                </div>
+
+                <div class="text-layer text-bottom" id="text3">
+                    <p class="phase-text">
+                        Some winters are harsher than others,<br>
+                        requiring us to find what Albert Camus called<br>
+                        <strong>"an invincible summer"</strong> within us.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Final Quote & Triptych -->
+            <div class="triptych-section" id="finalSection">
+                <div class="text-layer visible" style="position: relative; margin-bottom: 3rem; margin-top: 5rem;">
+                    <p class="phase-text" style="font-size: 1.4rem; font-style: italic;">
+                        "This is how we win:<br>
+                        We do not break the winter.<br>
+                        <strong style="color:var(--color-accent)">We simply make it impossible for it to last."</strong>
+                    </p>
+                    <p class="subtitle" style="margin-top: 1rem;">— Avery Lake</p>
+                </div>
+
+                <div class="triptych-grid">
+                    <div class="grid-item framed-piece"><img src="avery-lake-invincible-summer-triptych-1.png"
+                            alt="Panel 1"></div>
+                    <div class="grid-item framed-piece"><img src="avery-lake-invincible-summer-triptych-2.png"
+                            alt="Panel 2"></div>
+                    <div class="grid-item framed-piece"><img src="avery-lake-invincible-summer-triptych-3.png"
+                            alt="Panel 3"></div>
+                </div>
+
+                <div class="triptych-meta">
+                    <h2>The Invincible Summer</h2>
+                    <p>Avery Lake · 2026 · Triptych · 24 × 36 in</p>
+                </div>
+
+                <div class="product-details">
+                    <h3>AVAILABLE NOW IN THE ART OF AVERY LAKE GALLERY</h3>
+                    <p>
+                        This print is part of a <strong>limited edition of 10 + 2AP</strong><br>
+                        and comes with a DIGITAL CERTIFICATE OF AUTHENTICITY provided by Verisart.<br>
+                        SIGNED.
+                    </p>
+                    <br>
+                    <br>
+                    <p><strong>Comes with a Collector Dossier, including:</strong><br>Artist statement and story</p>
+
+                    <div class="detail-row">
+                        <span>• Museum-quality thick matte paper</span>
+                        <span>• Thickness: 10.3 mil</span>
+                        <span>• Weight: 189 g/m²</span>
+                        <span>• Opacity: 94%</span>
+                        <span>• ISO brightness: 104%</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Experience
+                        Again</button>
+                    <a href="mailto:hello@averylakeofficial.com?subject=Enquiry: The Invincible Summer (Edition)"
+                        class="btn">Enquire</a>
+                    <a href="https://averylakeofficial.com" target="_blank" class="btn">Explore More Art</a>
+                </div>
+
+                <div class="footer-credit">
+                    <p>The Art of Avery Lake © 2026</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- UI Elements -->
+    <div class="sound-control" id="soundControl">
+        <div class="sound-icon">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <span>SOUND ON</span>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator">
+        <div class="mouse-icon"></div>
+        <span class="scroll-text">Scroll to Begin</span>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="ambientAudio" loop>
+        <!-- Using Wikimedia Commons public domain audio: Bones breaking wood fire ice crackling.ogg -->
+        <source src="https://upload.wikimedia.org/wikipedia/commons/8/80/Bones_breaking_wood_fire_ice_crackling.ogg"
+            type="audio/ogg">
+    </audio>
+
+    <script>
+        // DOM Elements
+        const layers = [
+            document.getElementById('layer1'),
+            document.getElementById('layer2'),
+            document.getElementById('layer3')
+        ];
+
+        const labels = [
+            document.getElementById('label1'),
+            document.getElementById('label2'),
+            document.getElementById('label3')
+        ];
+
+        const texts = [
+            document.getElementById('text1'),
+            document.getElementById('text2'),
+            document.getElementById('text3')
+        ];
+
+        const titleGroup = document.getElementById('titleGroup');
+        const finalSection = document.getElementById('finalSection');
+        const progressBar = document.getElementById('progressBar');
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        const soundControl = document.getElementById('soundControl');
+        const ambientAudio = document.getElementById('ambientAudio');
+
+        // Sound Control Logic
+        let isMuted = true;
+        ambientAudio.volume = 0;
+
+        soundControl.addEventListener('click', () => {
+            if (isMuted) {
+                // Fade In
+                const playPromise = ambientAudio.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Playback started
+                        let vol = 0;
+                        const fadeInterval = setInterval(() => {
+                            if (vol < 0.5) { // Max volume 50% for subtlety
+                                vol += 0.05;
+                                ambientAudio.volume = vol;
+                            } else {
+                                clearInterval(fadeInterval);
+                            }
+                        }, 100);
+
+                        soundControl.classList.add('active');
+                        soundControl.querySelector('span').innerText = 'SOUND OFF';
+                        isMuted = false;
+                    })
+                        .catch(error => {
+                            console.error("Audio playback failed:", error);
+                            if (error.name === "NotAllowedError") {
+                                alert("Please interact with the page first to enable sound (Browser Policy).");
+                            } else {
+                                console.log("Audio load error. Checking network.");
+                            }
+                        });
+                }
+            } else {
+                // Fade Out
+                let vol = ambientAudio.volume;
+                const fadeInterval = setInterval(() => {
+                    if (vol > 0.05) {
+                        vol -= 0.05;
+                        ambientAudio.volume = vol;
+                    } else {
+                        ambientAudio.pause();
+                        clearInterval(fadeInterval);
+                    }
+                }, 100);
+
+                soundControl.classList.remove('active');
+                soundControl.querySelector('span').innerText = 'SOUND ON';
+                isMuted = true;
+            }
+        });
+
+        // Mouse Parallax Logic
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+            // Subtle movement
+            targetX = x * 15; // px movement
+            targetY = y * 15;
+        });
+
+        function animate() {
+            mouseX += (targetX - mouseX) * 0.05;
+            mouseY += (targetY - mouseY) * 0.05;
+
+            layers.forEach(layer => {
+                if (layer.classList.contains('active')) {
+                    const img = layer.querySelector('img');
+                    // Move opposite to mouse for depth feel
+                    img.style.transform = `scale(1.05) translate(${-mouseX}px, ${-mouseY}px)`;
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Scroll Logic with RAF throttling for mobile performance
+        let ticking = false;
+
+        function handleScroll() {
+            const scrollTotal = document.body.scrollHeight - window.innerHeight;
+            const progress = window.scrollY / scrollTotal;
+
+            // Update Progress Bar
+            progressBar.style.width = `${progress * 100}%`;
+
+            // Hide Scroll Indicator
+            if (progress > 0.05) scrollIndicator.classList.add('hidden');
+            else scrollIndicator.classList.remove('hidden');
+
+            // Timeline Management
+            // 0.00 - 0.15 : Title + Frozen (Layer 1)
+            // 0.15 - 0.35 : Text 1 (Do not fight cold) + Frozen
+            // 0.35 - 0.55 : Text 2 (Sunlight) + Melting (Layer 2)
+            // 0.55 - 0.75 : Text 3 (Camus) + Puddle (Layer 3)
+            // 0.75 - 1.00 : Final Scene
+
+            // Reset States
+            layers.forEach(l => l.classList.remove('active'));
+            texts.forEach(t => t.classList.remove('visible'));
+            labels.forEach(l => l.classList.remove('visible'));
+            titleGroup.classList.remove('visible');
+            finalSection.classList.remove('visible');
+
+            if (progress < 0.15) {
+                // Intro
+                layers[0].classList.add('active');
+                titleGroup.classList.add('visible');
+            }
+            else if (progress < 0.35) {
+                // Phase 1 Narrative
+                layers[0].classList.add('active');
+                texts[0].classList.add('visible');
+                labels[0].classList.add('visible');
+            }
+            else if (progress < 0.55) {
+                // Phase 2: Melting
+                layers[1].classList.add('active'); // Switch to Melting BG
+                texts[1].classList.add('visible');
+                labels[1].classList.add('visible');
+            }
+            else if (progress < 0.75) {
+                // Phase 3: Puddle
+                layers[2].classList.add('active'); // Switch to Puddle BG
+                texts[2].classList.add('visible');
+                labels[2].classList.add('visible');
+            }
+            else {
+                // Finale
+                finalSection.classList.add('visible');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(handleScroll);
+                ticking = true;
+            }
+        }, { passive: true });
+    </script>
+</body>
+
+</html>
